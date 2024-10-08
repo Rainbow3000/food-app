@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted } from "vue";
 
 const paypalButtonContainer = ref(null);
 
@@ -9,8 +9,6 @@ const props = defineProps({
     required: true,
   },
 });
-
-const totalMoney = computed(() => parseFloat(props.total / 24545).toFixed(2));
 
 const emit = defineEmits(["success"]);
 
@@ -23,7 +21,7 @@ onMounted(() => {
             purchase_units: [
               {
                 amount: {
-                  value: totalMoney.value, // Amount to be paid
+                  value: props.total, // Amount to be paid
                 },
               },
             ],

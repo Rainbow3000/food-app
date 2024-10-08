@@ -11,23 +11,23 @@ const props = defineProps<{
     <div class="category-img">
       <img :src="props.category.image" alt="" />
     </div>
-    <span style="margin-top: 50px; font-weight: bold">{{
+    <span style="margin-top: 60px; font-weight: 500;">{{
       props.category.name
     }}</span>
-    <span>({{ props.category.products?.length }}) sản phẩm</span>
+    <span style="margin-top: 10px;">({{ props.category.products?.length }}) Food</span>
   </router-link>
 </template>
 
 <style lang="scss" scoped>
 .category-container {
-  width: 15%;
-  height: 200px;
+  width: 20%;
+  height: 180px;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
   flex-direction: column;
-  background-color: #f7f7f8;
+  background-color: #f7f7f888;
   border-radius: 10px;
   margin: 50px 25px;
   cursor: pointer;
@@ -38,7 +38,6 @@ const props = defineProps<{
     height: 120px;
     justify-content: center;
     align-items: center;
-    border-radius: 50%;
     background-color: #ecf0ff;
     position: absolute;
     top: -50%;

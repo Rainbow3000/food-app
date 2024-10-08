@@ -80,7 +80,7 @@ const handleResetPass = async () => {
         :rules="rules"
         :model="ruleForm"
       >
-        <h3>ĐĂNG NHẬP</h3>
+        <h3>LOGIN</h3>
         <div class="form-holder">
           <span class="lnr lnr-user"></span>
           <el-form-item prop="email">
@@ -99,25 +99,35 @@ const handleResetPass = async () => {
               v-model="ruleForm.password"
               type="password"
               class="form-control"
-              placeholder="Mật khẩu"
+              placeholder="Password"
             />
           </el-form-item>
         </div>
         <div>
-          <span>Bạn chưa có tài khoản ? </span>
+          <span>Don't have an account ? </span>
         </div>
 
-        <div>
-          <router-link to="/register">Đăng ký</router-link> |
+        <div style="margin-top: 10px">
+          <router-link to="/register" style="color: orangered"
+            >Sign up here</router-link
+          >
+          |
           <span
-            style="text-decoration: underline; color: green; cursor: pointer"
+            style="
+              text-decoration: underline;
+              color: orangered;
+              cursor: pointer;
+            "
             @click="isResetPass = true"
-            >Khôi phục mật khẩu</span
+            >Forget password</span
           >
         </div>
 
-        <button @click="handleLogin">
-          <span>Đăng nhập</span>
+        <button
+          style="background-color: orangered; color: white"
+          @click="handleLogin"
+        >
+          <span>Sign in</span>
         </button>
       </el-form>
     </div>
@@ -131,8 +141,8 @@ const handleResetPass = async () => {
         :rules="rules"
         :model="ruleForm"
       >
-        <h3 style="width: max-content">KHÔI PHỤC MẬT KHẨU</h3>
-        <span>Vui lòng nhập email của bạn để nhận mật khẩu mới từ shop !</span>
+        <h3 style="width: max-content">Reset password</h3>
+        <span>Fill your email to receive new password !</span>
         <div class="form-holder">
           <span class="lnr lnr-user"></span>
           <el-form-item prop="email">
@@ -143,7 +153,7 @@ const handleResetPass = async () => {
               placeholder="Email"
             />
 
-            <el-button @click="handleResetPass">Gửi</el-button>
+            <el-button style="background-color: orangered;"click="handleResetPass">Send</el-button>
           </el-form-item>
         </div>
       </el-form>

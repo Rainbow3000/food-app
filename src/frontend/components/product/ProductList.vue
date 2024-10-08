@@ -20,7 +20,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <h2 v-if="!props.hiddenTitle">Sản phẩm nổi bật</h2>
+  <h2 v-if="!props.hiddenTitle" style="font-weight: bold;">FOOD LIST</h2>
   <div class="product-list" :style="props.isSetCss && 'padding: 0 200px'">
     <Product v-for="item in productList" :key="item.id" :product="item" />
   </div>

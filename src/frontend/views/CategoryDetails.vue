@@ -30,49 +30,6 @@ const submitFilter = () => {
   getProducts();
 };
 
-const colors = ref<TColor[]>([
-  {
-    label: "Trắng",
-    value: "white",
-  },
-  {
-    label: "Đen",
-    value: "black",
-  },
-  {
-    label: "Đỏ",
-    value: "red",
-  },
-  {
-    label: "Xanh lam",
-    value: "blue",
-  },
-  {
-    label: "Xanh lục",
-    value: "green",
-  },
-  {
-    label: "Vàng",
-    value: "yellow",
-  },
-  {
-    label: "Cam",
-    value: "orange",
-  },
-  {
-    label: "Xám",
-    value: "gray",
-  },
-  {
-    label: "Hồng",
-    value: "pink",
-  },
-  {
-    label: "Tím",
-    value: "Violet",
-  },
-]);
-
 const sizes = ref<string[]>(["S", "M", "L"]);
 
 onMounted(() => {
@@ -87,11 +44,11 @@ onBeforeRouteLeave(async () => {
 </script>
 
 <template>
-  <h2 style="margin-top: 50px">Sản phẩm theo danh mục</h2>
+  <h2 style="margin-top: 50px; font-weight: bold;">Food by category</h2>
   <div class="category-details">
     <el-card class="left">
       <div class="filter-item">
-        <span>Giá</span>
+        <span>Price</span>
         <div class="hr"></div>
         <div style="display: flex; align-items: center; margin-top: 10px">
           <input type="checkbox" :checked="filterParams.price === 'DESC'" @change="() => {
@@ -99,7 +56,7 @@ onBeforeRouteLeave(async () => {
             submitFilter();
           }
             " />
-          <span>Cao -> Thấp</span>
+          <span>Expensive</span>
         </div>
 
         <div style="display: flex; align-items: center; margin-top: 10px">
@@ -108,26 +65,12 @@ onBeforeRouteLeave(async () => {
             submitFilter();
           }
             " />
-          <span>Thấp -> Cao</span>
+          <span>Cheap</span>
         </div>
       </div>
 
       <div class="filter-item">
-        <span>Màu sắc</span>
-        <div class="hr"></div>
-        <div v-for="color in colors" :key="color.value" style="display: flex; align-items: center; margin-top: 10px">
-          <input type="checkbox" :checked="filterParams.color === color.value" @change="() => {
-            filterParams.color = color.value;
-            submitFilter();
-          }
-            " />
-          <span>{{ color.label }}</span>
-          <div class="color" :style="`background-color:${color.value}`"></div>
-        </div>
-      </div>
-
-      <div class="filter-item">
-        <span>Kích cỡ</span>
+        <span>Size</span>
         <div class="hr"></div>
         <div v-for="size in sizes" :key="size" style="display: flex; align-items: center; margin-top: 10px">
           <input type="checkbox" :checked="size === filterParams.size" @change="() => {

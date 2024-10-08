@@ -15,7 +15,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <h2 style="margin-top: 50px">Danh mục</h2>
+  <h2 style="margin-top: 50px; font-weight: bold;">CATEGORY</h2>
   <div class="category-list">
     <Category v-for="item in categoryList" :key="item.id" :category="item" />
   </div>

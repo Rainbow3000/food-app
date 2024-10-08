@@ -1,9 +1,8 @@
 <script lang="ts" setup>
-import { onMounted, reactive, ref } from "vue";
+import { reactive, ref } from "vue";
 import type { ComponentSize, FormInstance, FormRules } from "element-plus";
 import { useCartStore } from "@/stores/cart";
 import { storeToRefs } from "pinia";
-import { formatCurrency } from "@/utils/format";
 import { useUserStore } from "@/stores/user";
 import { useOrder } from "@/composables/useOrder";
 import { useRouter } from "vue-router";
@@ -12,11 +11,11 @@ import PaypalButton from "@/paypal/PaypalButton.vue";
 import { ORDER_TYPE } from "@/common/enum";
 
 type RuleForm = {
-  userName: string
-  phoneNumber: string
-  address: string
-  note: string,
-}
+  userName: string;
+  phoneNumber: string;
+  address: string;
+  note: string;
+};
 
 const formSize = ref<ComponentSize>("default");
 const ruleFormRef = ref<FormInstance>();
@@ -24,17 +23,18 @@ const ruleFormRef = ref<FormInstance>();
 const { user } = storeToRefs(useUserStore());
 
 const ruleForm = reactive<RuleForm>({
-  userName: user.value?.userName || JSON.parse(localStorage.getItem('user') as string)?.user?.userName || "",
+  userName:
+    user.value?.userName ||
+    JSON.parse(localStorage.getItem("user") as string)?.user?.userName ||
+    "",
   phoneNumber: user.value?.userInfo?.phoneNumber || "",
   address: user.value?.userInfo?.address || "",
   note: "",
 });
 
-
-
 const router = useRouter();
 
-const cartStore = useCartStore()
+const cartStore = useCartStore();
 
 const { cartList, total } = storeToRefs(cartStore);
 
@@ -46,11 +46,24 @@ const switchPayment = ref(false);
 
 const rules = reactive<FormRules<RuleForm>>({
   phoneNumber: [
-    { required: true, message: 'Số điện thoại không được bỏ trống', trigger: ['change', 'blur'] },
-    { min: 10, max: 11, message: 'Số điện thoại phải từ 10 -> 11 chữ số', trigger: ['change', 'blur'] },
+    {
+      required: true,
+      message: "Phone is required",
+      trigger: ["change", "blur"],
+    },
+    {
+      min: 10,
+      max: 11,
+      message: "Phone length is 10 -> 11 digits",
+      trigger: ["change", "blur"],
+    },
   ],
   address: [
-    { required: true, message: 'Địa chỉ dùng không được bỏ trống', trigger: ['change', 'blur'] },
+    {
+      required: true,
+      message: "Address is required",
+      trigger: ["change", "blur"],
+    },
   ],
 });
 
@@ -76,10 +89,13 @@ const submitCreateOrder = async (type: ORDER_TYPE) => {
     paymentType: type,
   });
 
-  await updateUserInfo({
-    phoneNumber: ruleForm.phoneNumber,
-    address: ruleForm.address,
-  }, false);
+  await updateUserInfo(
+    {
+      phoneNumber: ruleForm.phoneNumber,
+      address: ruleForm.address,
+    },
+    false
+  );
 
   if (orderId) {
     await Promise.all(
@@ -98,7 +114,7 @@ const submitCreateOrder = async (type: ORDER_TYPE) => {
     );
   }
 
-  cartStore.clearCart()
+  cartStore.clearCart();
 };
 
 const handleOrderSuccess = async (payload: {
@@ -114,36 +130,50 @@ const handleOrderSuccess = async (payload: {
 
   router.replace("/success");
 };
-
 </script>
 
 <template>
-  <h2>Thanh toán</h2>
+  <h2>Payment</h2>
   <div class="payment">
     <el-card class="left">
-      <el-form ref="ruleFormRef" style="max-width: 600px" :model="ruleForm" :rules="rules" label-width="auto"
-        class="demo-ruleForm" :size="formSize">
-        <el-form-item label="Số điện thoại" prop="phoneNumber">
+      <el-form
+        ref="ruleFormRef"
+        style="max-width: 600px"
+        :model="ruleForm"
+        :rules="rules"
+        label-width="auto"
+        class="demo-ruleForm"
+        :size="formSize"
+      >
+        <el-form-item label="Phone number" prop="phoneNumber">
           <el-input v-model="ruleForm.phoneNumber" style="height: 40px" />
         </el-form-item>
 
         <div v-if="!switchPayment">
-          <el-form-item label="Địa chỉ" prop="address">
+          <el-form-item label="Address" prop="address">
             <el-input v-model="ruleForm.address" style="height: 40px" />
           </el-form-item>
-          <el-form-item label="Ghi chú cho người bán">
+          <el-form-item label="Note">
             <el-input v-model="ruleForm.note" type="textarea" />
           </el-form-item>
         </div>
-        <el-form-item label="Thanh toán online" prop="delivery">
+        <el-form-item label="Pay with PayPal" prop="delivery">
           <el-switch v-model="switchPayment" />
         </el-form-item>
 
-        <PaypalButton @success="handleOrderSuccess" :total="total" v-if="switchPayment" />
+        <PaypalButton
+          @success="handleOrderSuccess"
+          :total="total"
+          v-if="switchPayment"
+        />
 
         <el-form-item v-else>
-          <el-button style="height: 45px; width: 200px" type="primary" @click="submitForm(ruleFormRef)">
-            Đặt hàng
+          <el-button
+            style="height: 45px; width: 200px"
+            type="primary"
+            @click="submitForm(ruleFormRef)"
+          >
+            Payment
           </el-button>
         </el-form-item>
       </el-form>
@@ -151,23 +181,31 @@ const handleOrderSuccess = async (payload: {
 
     <el-card class="cart-list">
       <div v-for="(item, index) in cartList" :key="index" class="cart-item">
-        <img width="90px" height="90px" style="border-radius: 5px" :src="item.product.image" alt="" />
+        <img
+          width="90px"
+          height="90px"
+          style="border-radius: 5px"
+          :src="item.product.image"
+          alt=""
+        />
         <div class="info">
-          <span><b style="color: #333; font-weight: 500">Tên:</b>&nbsp;
+          <span
+            ><b style="color: #333">Name:</b>&nbsp;
             {{ item.product.description }}
           </span>
-          <span style="margin-top: 5px"><b style="color: #333; font-weight: 500">Số lượng: </b>&nbsp; x
-            {{ item.quantity }}</span>
-          <span style="margin-top: 5px"><b style="color: #333; font-weight: 500">Giá tiền: </b>&nbsp;
-            <span style="color: red">{{
-              formatCurrency(item.product.newPrice)
-            }}</span></span>
+          <span style="margin-top: 5px"
+            ><b style="color: #333">Qty: </b>&nbsp; x {{ item.quantity }}</span
+          >
+          <span style="margin-top: 5px"
+            ><b style="color: #333">Price: </b>&nbsp;
+            <span style="color: red">${{ item.product.newPrice }}</span></span
+          >
         </div>
       </div>
-      <span style="margin-top: 30px"><b style="margin-top: 20px; color: #333">Tổng tiền: </b>
-        <span style="color: red">{{
-          cartList.length ? formatCurrency(total) : formatCurrency(0)
-        }}</span></span>
+      <span style="margin-top: 30px"
+        ><b style="margin-top: 20px; color: #333">Total: </b>
+        <span style="color: red">${{ cartList.length ? total : 0 }}</span></span
+      >
     </el-card>
   </div>
 </template>

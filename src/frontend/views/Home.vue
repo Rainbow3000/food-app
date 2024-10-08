@@ -2,7 +2,6 @@
 import Featured from "../components/featured/Featured.vue";
 import CategoryList from '../components/category/CategoryList.vue'
 import ProductList from "../components/product/ProductList.vue";
-import Info from "../components/Info.vue";
 </script>
 
 <template>
@@ -10,7 +9,6 @@ import Info from "../components/Info.vue";
     <Featured />
     <CategoryList />
     <ProductList :isSetCss="true" />
-    <Info />
   </div>
 </template>
 

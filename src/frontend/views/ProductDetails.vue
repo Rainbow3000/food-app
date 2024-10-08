@@ -27,23 +27,21 @@ const route = useRoute();
 const id = computed(() => parseInt(route.params.id as string));
 
 const colors = computed(() => {
-  return singleProduct.value.color.split(",")
+  return singleProduct.value.color?.split(",");
 });
-const sizes = computed(() => singleProduct.value.size.split(","));
+const sizes = computed(() => singleProduct.value.size?.split(","));
 
-const color = ref(colors.value[0] as string || "")
-const size = ref(sizes.value[0] as string || "")
+const size = ref((sizes.value[0] as string) || "");
 
-const chooseSize = ref(colors.value[0] as string || "");
-const chooseColor = ref(sizes.value[0] as string || "");
+const chooseSize = ref((colors?.value[0] as string) || "");
+const chooseColor = ref((sizes?.value[0] as string) || "");
 
-watch(() => colors.value, () => {
-  chooseColor.value = colors.value[0] as string || ""
-})
-
-watch(() => sizes.value, () => {
-  chooseSize.value = sizes.value[0] as string || ""
-})
+watch(
+  () => sizes.value,
+  () => {
+    chooseSize.value = (sizes?.value[0] as string) || "";
+  }
+);
 
 const form = reactive({
   productId: id.value || null,
@@ -55,17 +53,19 @@ const handleAddToCart = () => {
     {
       ...singleProduct.value,
       size: chooseSize.value,
-      color: chooseColor.value,
+      color: chooseColor?.value,
     },
     quantity.value
   );
+
+  ElMessage.success("Add to card !");
 };
 
 const { createComment } = useComment();
 
 const handleCreateComment = async () => {
   if (!user.value && !localStorage.getItem("user"))
-    return ElMessage.error("Bạn cần đăng nhập để bình luận !");
+    return ElMessage.error("Please login !");
 
   const response = await createComment({
     productId: form.productId as number,
@@ -85,19 +85,14 @@ onMounted(async () => {
   await getComments(id.value);
 });
 
-
-const handleChooseColor = (payload: string) => {
-
-  chooseColor.value = payload
-
-  updatePropsCart(id.value, { color: chooseColor.value, size: chooseSize.value });
-}
-
 const handleChooseSize = (payload: string) => {
-  chooseSize.value = payload
+  chooseSize.value = payload;
 
-  updatePropsCart(id.value, { size: chooseSize.value, color: chooseColor.value });
-}
+  updatePropsCart(id.value, {
+    size: chooseSize.value,
+    color: chooseColor.value,
+  });
+};
 </script>
 
 <template>
@@ -116,31 +111,24 @@ const handleChooseSize = (payload: string) => {
             <i class="pi pi-star"></i>&nbsp; <i class="pi pi-star"></i>&nbsp;
             <i class="pi pi-star"></i>&nbsp;
           </span>
-          <span>75 bình luận</span>
+          <span>{{ commentList.length }} Comment</span>
         </div>
+
         <div class="details-item">
-          <span> Danh mục: </span>
-          <span>Áo</span>
-        </div>
-        <div class="details-item">
-          <span> Màu sắc: </span>
-          <div :class="chooseColor === color ? 'color active' : 'color'" v-for="color in colors" :key="color"
-            :style="`width: 25px;height: 25px; background-color:${color};border-radius: 5px; opacity: 0.5;`" @click="
-              handleChooseColor(color,)
-              "></div>
-        </div>
-        <div class="details-item">
-          <span> Kích cỡ: </span>
-          <div v-for="size in sizes" :key="size" :class="chooseSize === size ? 'size active' : 'size'"
-            @click="handleChooseSize(size)">
+          <span> Size: </span>
+          <div
+            v-for="size in sizes"
+            :key="size"
+            :class="chooseSize === size ? 'size active' : 'size'"
+            @click="handleChooseSize(size)"
+          >
             {{ size }}
           </div>
         </div>
 
         <div class="details-price">
-          <span> Giá tiền: </span>
-          <span>{{ formatCurrency(singleProduct.newPrice) }}</span>
-          <span>{{ formatCurrency(singleProduct.oldPrice) }}</span>
+          <span> Price: </span>
+          <span>${{ singleProduct.newPrice }}</span>
         </div>
 
         <div class="details-item">
@@ -153,31 +141,43 @@ const handleChooseSize = (payload: string) => {
         </div>
 
         <div class="details-quantity">
-          <el-button @click="() => {
-            if (quantity > 1) {
-              quantity = quantity - 1;
-            }
-          }
-            ">-</el-button>
+          <el-button
+            @click="
+              () => {
+                if (quantity > 1) {
+                  quantity = quantity - 1;
+                }
+              }
+            "
+            >-</el-button
+          >
           <div>{{ quantity }}</div>
           <el-button @click="quantity = quantity + 1">+</el-button>
-          <el-button @click="handleAddToCart" type="primary"
-            style="width: max-content; height: 45px; margin-left: 30px">
-            Thêm vào giỏ hàng
+          <el-button
+            @click="handleAddToCart"
+            style="
+              width: max-content;
+              height: 45px;
+              margin-left: 30px;
+              color: #ffffff;
+              background-color: orangered;
+            "
+          >
+            Add to cart
           </el-button>
         </div>
       </el-card>
     </div>
 
     <el-card class="bottom">
-      <h2>Bình luận & đánh giá</h2>
+      <h2>Comment & Evaluate</h2>
 
       <div class="comment-list">
         <div class="item" v-for="item in commentList" :key="item.id">
           <div style="color: #5e77c9; font-weight: bold">
             {{ item.user?.userName }} |
             <span style="color: gray; font-weight: normal">{{
-              formatDate(item.createdAt)
+              formatDate(item.createdAt as string)
             }}</span>
           </div>
           <div style="color: #333; margin-top: 10px; font-weight: 500">
@@ -186,15 +186,22 @@ const handleChooseSize = (payload: string) => {
         </div>
       </div>
       <div>
-        <el-input v-model="form.content" style="height: 45px; margin-top: 25px"
-          placeholder="Thêm bình luận của bạn..." />
-        <el-button @click="handleCreateComment" style="margin-top: 10px; height: 45px" type="primary">Bình
-          luận</el-button>
+        <el-input
+          v-model="form.content"
+          style="height: 45px; margin-top: 25px"
+          placeholder="Add your comment..."
+        />
+        <el-button
+          @click="handleCreateComment"
+          style="margin-top: 10px; height: 45px"
+          type="primary"
+          >OK</el-button
+        >
       </div>
     </el-card>
 
     <div class="product-list">
-      <h2>Sản phẩm liên quan</h2>
+      <h2>Food relation</h2>
       <ProductList :hiddenTitle="true" />
     </div>
   </div>
@@ -257,7 +264,6 @@ const handleChooseSize = (payload: string) => {
 
         span {
           &:first-child {
-            font-weight: bold;
             margin-right: 20px;
           }
         }
@@ -273,7 +279,7 @@ const handleChooseSize = (payload: string) => {
           cursor: pointer;
 
           &.active {
-            border: 2px solid blue;
+            border: 2px solid orange;
           }
         }
 
@@ -296,16 +302,9 @@ const handleChooseSize = (payload: string) => {
 
         span {
           margin-right: 20px;
-          font-weight: bold;
-
-          &:nth-child(2) {
-            color: red;
-          }
 
           &:last-child {
-            text-decoration: line-through;
-            color: gray;
-            font-weight: inherit;
+            color: orangered;
           }
         }
       }

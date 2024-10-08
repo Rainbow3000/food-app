@@ -45,22 +45,22 @@ onMounted(async () => await getOrderByUser());
 
 const activities = [
   {
-    content: "Chờ duyệt",
+    content: "Pending",
     timestamp: "2018-04-03 20:46",
     color: "gray",
   },
   {
-    content: "Đang vận chuyển",
+    content: "Delivery",
     timestamp: "2018-04-03 20:46",
     color: "orange",
   },
   {
-    content: "Hoàn tất",
+    content: "Done",
     timestamp: "2018-04-03 20:46",
     color: "green",
   },
   {
-    content: "Huỷ đơn",
+    content: "Cancel",
     timestamp: "2018-04-03 20:46",
     color: "red",
   },
@@ -73,7 +73,7 @@ const handleCancelOrder = async (id: number) => {
 </script>
 
 <template>
-  <h2 style="margin-top: 50px">Đơn hàng của tôi</h2>
+  <h2 style="margin-top: 50px; font-weight: bold">My order</h2>
   <div class="order-list">
     <el-timeline style="max-width: 600px">
       <el-timeline-item v-for="(activity, index) in activities" :key="index" :color="activity.color">
@@ -82,30 +82,22 @@ const handleCancelOrder = async (id: number) => {
     </el-timeline>
     <el-card>
       <el-table :data="data" style="width: 100%">
-        <el-table-column label="Ảnh sản phẩm" width="180">
+        <el-table-column label="Image" width="180">
           <template #default="scope">
             <div style="display: flex; align-items: center">
               <img width="90px" height="90px" :src="scope.row?.product?.image" alt="" />
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="Chi tiết" width="180">
+        <el-table-column label="Description" width="180">
           <template #default="scope">
             <div style="display: flex; align-items: center">
               <div>
                 <div>
-                  Tên:
+                  Name:
                   <b>{{ scope.row?.product?.name }}</b>
                 </div>
-                <span>Màu sắc:
-                  <div :style="`
-                      width: 18px;
-                      height: 18px;
-                      background-color: ${scope.row?.product?.color};
-                      border-radius: 5px;
-                    `"></div>
-                </span>
-                <span>Kích cỡ:
+                <span>Size:
                   <div style="
                       width: 20px;
                       height: 20px;
@@ -120,17 +112,17 @@ const handleCancelOrder = async (id: number) => {
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="Giá" width="120">
+        <el-table-column label="price" width="120">
           <template #default="scope">
             <div style="display: flex; align-items: center">
-              <span style="color: blue; font-weight: bold">{{
-                formatCurrency(scope.row?.product?.newPrice)
+              <span style="color: orangered">${{
+                scope.row?.product?.newPrice
               }}</span>
             </div>
           </template>
         </el-table-column>
 
-        <el-table-column label="#ID đơn" width="120">
+        <el-table-column label="#ID" width="120">
           <template #default="scope">
             <div style="display: flex; align-items: center">
               <span> x {{ scope.row?.orderId }}</span>
@@ -138,7 +130,7 @@ const handleCancelOrder = async (id: number) => {
           </template>
         </el-table-column>
 
-        <el-table-column label="Số lượng" width="120">
+        <el-table-column label="Qty" width="120">
           <template #default="scope">
             <div style="display: flex; align-items: center">
               <span> x {{ scope.row?.quantity }}</span>
@@ -146,30 +138,30 @@ const handleCancelOrder = async (id: number) => {
           </template>
         </el-table-column>
 
-        <el-table-column label="Tổng tiền" width="120">
+        <el-table-column label="Total" width="120">
           <template #default="scope">
             <div style="display: flex; align-items: center">
-              <span style="color: red; font-weight: bold">{{
-                formatCurrency(scope.row?.product?.newPrice * scope.row?.quantity)
+              <span style="color: red; font-weight: bold">${{
+                scope.row?.product?.newPrice * scope.row?.quantity
               }}</span>
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="Ngày đặt" width="120">
+        <el-table-column label="Date order" width="120">
           <template #default="scope">
             <div style="display: flex; align-items: center">
               <span>{{ scope.row?.createdAt }}</span>
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="Ghi chú" width="180">
+        <el-table-column label="Note" width="180">
           <template #default="scope">
             <div style="display: flex; align-items: center">
               <span>{{ scope.row?.userNote }}</span>
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="Trạng thái" width="120">
+        <el-table-column label="Status" width="120">
           <template #default="scope">
             <div style="display: flex; align-items: center">
               <div v-if="scope.row?.orderStatus === 'pending'" style="
@@ -199,18 +191,6 @@ const handleCancelOrder = async (id: number) => {
             </div>
           </template>
         </el-table-column>
-        <!-- <el-table-column label="Thao tác">
-          <template #default="scope">
-            <el-button
-              style="height: 45px"
-              size="small"
-              type="danger"
-              @click="() => handleCancelOrder(scope.row.id)"
-            >
-              Huỷ đơn
-            </el-button>
-          </template>
-        </el-table-column> -->
       </el-table>
     </el-card>
   </div>

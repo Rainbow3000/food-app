@@ -34,21 +34,31 @@ const isAdmin = computed(() =>
 );
 
 const handleToHome = () => {
-  window.location.href = "/"
-}
+  window.location.href = "/";
+};
 </script>
 
 <template>
   <div class="navbar">
     <div class="top">
       <div class="top-item logo">
-        <div style="cursor: pointer;" @click="handleToHome">
-          <img style="object-fit: cover;" width="200px" height="90px"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStrYqXRWsdtSLitdeuRn-1cwpjl3Jy40fYKg&s" alt="" />
+        <div style="cursor: pointer" @click="handleToHome">
+          <img
+            style="object-fit: cover"
+            width="max-content"
+            height="45px"
+            src="/food.png"
+            alt=""
+          />
         </div>
       </div>
       <div class="top-item search">
-        <input @input="handleFilter" v-model="q" type="text" placeholder="Tìm sản phẩm bạn muốn..." />
+        <input
+          @input="handleFilter"
+          v-model="q"
+          type="text"
+          placeholder="Search food..."
+        />
         <button>
           <el-icon>
             <Search />
@@ -58,57 +68,69 @@ const handleToHome = () => {
       <div class="top-item action">
         <div v-if="isAdmin" class="item">
           <i class="pi pi-building-columns"></i>&nbsp;
-          <router-link style="color: inherit; text-decoration: none" to="/admin/dashboard">
-            <span>Trang quản trị</span>
+          <router-link
+            style="color: inherit; text-decoration: none"
+            to="/admin/dashboard"
+          >
+            <span style="font-weight: 300; color: gray">Admin</span>
           </router-link>
         </div>
         <div class="item" v-if="user">
           <i class="pi pi-shopping-bag"></i>&nbsp;
-          <router-link style="color: inherit; text-decoration: none" to="/my-order">
-            <span>Đơn hàng</span>
+          <router-link
+            style="color: inherit; text-decoration: none"
+            to="/my-order"
+          >
+            <span style="font-weight: 300; color: gray">Order</span>
           </router-link>
         </div>
         <div class="item">
           <i class="pi pi-heart"></i>&nbsp;
-          <span>Yêu thích</span>
+          <span style="font-weight: 300; color: gray">Favourite</span>
         </div>
         <div class="item">
           <i class="pi pi-shopping-cart"></i>&nbsp;
-          <router-link style="color: inherit; text-decoration: none" to="/cart"><span>Giỏ hàng (<b style="color: red">{{
-            cartList.length }}</b>)</span></router-link>
+          <router-link style="color: inherit; text-decoration: none" to="/cart"
+            ><span style="font-weight: 300; color: gray"
+              >Cart (<b style="color: red">{{ cartList.length }}</b
+              >)</span
+            ></router-link
+          >
         </div>
         <div class="item" v-if="!user">
-          <i class="pi pi-user"></i>&nbsp;
-          <router-link style="color: inherit; text-decoration: none" to="/login"><span>Đăng nhập</span></router-link>
-          <span>&nbsp;|&nbsp;</span>
-          <router-link style="color: inherit; text-decoration: none" to="/register"><span>Đăng ký</span></router-link>
+          <router-link
+            style="color: inherit; text-decoration: none; margin-right: 20px"
+            to="/login"
+            ><el-button class="btn-auth" style="font-weight: 300; color: gray"
+              >Login</el-button
+            ></router-link
+          >
+
+          <router-link
+            style="color: inherit; text-decoration: none"
+            to="/register"
+            ><el-button class="btn-auth" style="font-weight: 300; color: gray"
+              >Register</el-button
+            ></router-link
+          >
         </div>
 
         <div v-if="user" class="item">
           <i class="pi pi-user"></i>&nbsp;
-          <span><b style="color: green; font-size: 20px">{{
-            user.userName
-          }}</b></span>
+          <span
+            ><b style="color: green; font-size: 20px">{{
+              user.userName
+            }}</b></span
+          >
         </div>
 
         <div v-if="user" class="item" @click="handleLogout">
           <i class="pi pi-spin pi-cog"></i>
 
-          <span>Thoát</span>
+          <span style="font-weight: 300; color: gray">Logout</span>
         </div>
       </div>
     </div>
-
-    <!-- <div class="bottom">
-      <i style="margin-left: 65px; font-weight: bold; cursor: pointer" class="pi pi-bars"></i>
-      <ul>
-        <li class="active">Trang chủ</li>
-        <li>Sản phẩm</li>
-        <li>Danh mục</li>
-        <li>Bài viết</li>
-        <li>Liên hệ</li>
-      </ul>
-    </div> -->
   </div>
   <div class="hr"></div>
 </template>
@@ -127,13 +149,14 @@ const handleToHome = () => {
   left: 0;
   right: 0;
   z-index: 99;
-  background-color: #FFFFFF;
-  border-bottom: 0.5px solid  #EEEEEE;
+  background-color: #ffffff;
+  border-bottom: 0.5px solid #eeeeee;
+  font-family: "Roboto", sans-serif;
 
   .top {
     display: flex;
     width: 100%;
-    justify-content: space-between;
+    position: relative;
     align-items: center;
 
     .top-item {
@@ -142,12 +165,12 @@ const handleToHome = () => {
     }
 
     .search {
-      border: 1px solid #3f51b5;
+      border: 1px solid orangered;
       border-radius: 5px;
       height: 45px;
       display: flex;
       align-items: center;
-      width: 100%;
+      width: 20%;
 
       input {
         width: 100%;
@@ -156,6 +179,10 @@ const handleToHome = () => {
         outline: none;
         border-radius: 5px;
         padding-left: 10px;
+
+        &::placeholder {
+          font-weight: 300;
+        }
       }
 
       button {
@@ -165,14 +192,15 @@ const handleToHome = () => {
         justify-content: center;
         align-items: center;
         border: none;
-        background-color: #3f51b5;
+        background-color: orangered;
         color: white;
         font-weight: bold;
         font-size: 20px;
         cursor: pointer;
 
         &:hover {
-          background-color: #1f39cc;
+          color: white;
+          background-color: orangered;
         }
       }
     }
@@ -181,14 +209,24 @@ const handleToHome = () => {
       display: flex;
       align-items: center;
       justify-content: flex-end;
+      position: absolute;
+      right: 0;
 
       .item {
         display: flex;
         align-items: center;
         width: max-content;
-        margin-left: 25px;
+        margin-left: 45px;
         height: max-content;
         cursor: pointer;
+      }
+
+      .btn-auth {
+        height: 45px;
+        &:hover {
+          background-color: orangered;
+          color: #ffffff !important;
+        }
       }
     }
   }

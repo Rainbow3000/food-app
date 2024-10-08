@@ -1,67 +1,53 @@
 <script setup lang="ts">
 import type { TProduct } from "@/common/type";
-import { computed } from "vue";
-import { formatCurrency } from "@/utils/format";
 
 const props = defineProps<{
   product: TProduct;
 }>();
 
-const colors = computed(() => props.product?.color.split(","));
-const sizes = computed(() => props.product?.size.split(","));
-
 </script>
 
 <template>
-  <router-link style="text-decoration: none;" class="product-container" :to="`/product/${props.product?.id}`">
+  <router-link
+    style="text-decoration: none"
+    class="product-container"
+    :to="`/product/${props.product?.id}`"
+  >
     <img :src="props.product?.image" alt="" />
     <div class="main">
       <div class="product-cate">
-        <div style="margin-bottom: 10px">
-          <span>#Đã bán: <b>{{ product.sold }}</b></span>
-          <span v-if="parseFloat(product.newPrice) > 300000">
-            <i class="pi pi-spin pi-star"></i>&nbsp;
-            <i class="pi pi-spin pi-star"></i>&nbsp;
-            <i class="pi pi-spin pi-star"></i>&nbsp;
-            <i class="pi pi-spin pi-star"></i>&nbsp;
-            <i class="pi pi-spin pi-star"></i>&nbsp;
-          </span>
-
-          <span v-else>
-            <i style="color: green;" class="pi pi-spin pi-star"></i>&nbsp;
-            <i style="color: green;" class="pi pi-spin pi-star"></i>&nbsp;
-            <i style="color: green;" class="pi pi-spin pi-star"></i>&nbsp;
-            <i style="color: green;" class="pi pi-spin pi-star"></i>&nbsp;
-          </span>
-        </div>
-        <span style="
+        <div style="margin-bottom: 10px; width: 100%">
+          <span
+            style="
               color: #333;
               display: block;
               font-weight: 500;
-              width: 100%;
+              width: 60%;
               white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;
-            ">{{ props.product?.name }}</span>
+            "
+            >{{ props.product?.name }}</span
+          >
+          <span style="font-weight: 300; color: gray; width: 40%; text-align: right"
+            >#Sold: {{ product.sold }}</span
+          >
+        </div>
       </div>
 
       <div class="product-price">
-        <span style="text-decoration: line-through">{{
-          formatCurrency(props.product?.oldPrice)
-        }}</span>
-        <span style="font-weight: bold; color: red">{{
-          formatCurrency(props.product?.newPrice)
-        }}</span>
-      </div>
+        <span>$ {{ props.product?.newPrice }}</span>
 
-      <div class="bottom">
-        <div class="color-list">
-          <div v-for="color in colors.slice(0, 3)" :key="color" class="color"
-            :style="`background-color: ${color}; opacity: 0.5; border: 3px solid #EEEEEE`"></div>
-        </div>
-        <div class="size-list">
-          <div v-for="size in sizes" :key="size" class="size">{{ size }}</div>
-        </div>
+        <el-button
+          style="
+            background-color: orangered;
+            height: 45px;
+            font-weight: 300;
+            color: white;
+            border-radius: 10px;
+          "
+          >Add to cart</el-button
+        >
       </div>
     </div>
   </router-link>
@@ -69,7 +55,7 @@ const sizes = computed(() => props.product?.size.split(","));
 
 <style lang="scss" scoped>
 .product-container {
-  width: 20%;
+  width: 300px;
   height: auto;
   margin: 10px 0;
   padding-bottom: 10px;
