@@ -24,6 +24,15 @@ export type TProduct = {
   deletedAt?: string;
 };
 
+export type TNotification = {
+  id?: number;
+  userId: number;
+  content: string;
+  createdAt?: string;
+  updatedAt?: string;
+  deletedAt?: string;
+};
+
 export type TCart = {
   product: TProduct;
   quantity: number;

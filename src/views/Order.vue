@@ -47,7 +47,7 @@ const { getOrders, updateOrder } = useOrder();
 
 const tableColumns = [
   { prop: "id", label: "#ID", width: "auto" },
-  { prop: "email", label: "Email", width: "auto" },
+  { prop: "email", label: "Email", width: "200px" },
   { prop: "phoneNumber", label: "Số điện thoại", width: "auto" },
   { prop: "address", label: "Địa chỉ", width: "auto" },
   { prop: "userName", label: "Tên người dùng", width: "auto" },

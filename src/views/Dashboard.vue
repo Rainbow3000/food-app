@@ -12,6 +12,7 @@ import AreaChart from "@/components/charts/AreaChart.vue";
 import BarChart from "@/components/charts/BarChart.vue";
 import { useOrder } from "@/composables/useOrder";
 import { ORDER_STATUS } from "@/common/enum";
+import { useNotification } from "@/composables/useNotification";
 
 const userStore = useUserStore();
 
@@ -28,6 +29,8 @@ const { chartCount, chartUserStat, chartOrderStat, chartRevenue } =
 const { getCount, getUserStat, getOrderStat, getRevenueStat } = useChart();
 
 const { getOrders } = useOrder();
+
+const { getNotification } = useNotification();
 
 const tableColumns = [
   { prop: "id", label: "ID", width: "auto" },
@@ -55,6 +58,7 @@ onMounted(() => {
   getUserStat();
   getOrderStat();
   getRevenueStat();
+  getNotification();
 });
 </script>
 

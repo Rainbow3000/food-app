@@ -7,8 +7,8 @@ import { useUserStore } from "@/stores/user";
 import { useOrder } from "@/composables/useOrder";
 import { useRouter } from "vue-router";
 import { useUser } from "@/composables/useUser";
-import PaypalButton from "@/paypal/PaypalButton.vue";
-import { ORDER_TYPE } from "@/common/enum";
+import { ORDER_TYPE } from "@/common/enum"
+import PaypalButton from './PaypalButton.vue'
 
 type RuleForm = {
   userName: string;

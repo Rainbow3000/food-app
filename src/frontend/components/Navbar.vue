@@ -72,7 +72,16 @@ const handleToHome = () => {
             style="color: inherit; text-decoration: none"
             to="/admin/dashboard"
           >
-            <span style="font-weight: 300; color: gray">Admin</span>
+            <span style="font-weight: 300; color: gray">Dashboard</span>
+          </router-link>
+        </div>
+        <div class="item">
+          <i class="pi pi-bell"></i>&nbsp;
+          <router-link
+            style="color: inherit; text-decoration: none"
+            to="/notification"
+          >
+            <span style="font-weight: 300; color: gray"> Notification </span>
           </router-link>
         </div>
         <div class="item" v-if="user">
@@ -118,16 +127,20 @@ const handleToHome = () => {
         <div v-if="user" class="item">
           <i class="pi pi-user"></i>&nbsp;
           <span
-            ><b style="color: green; font-size: 20px">{{
-              user.userName
-            }}</b></span
+            ><b>{{ user.userName }}</b></span
           >
         </div>
 
         <div v-if="user" class="item" @click="handleLogout">
-          <i class="pi pi-spin pi-cog"></i>
-
-          <span style="font-weight: 300; color: gray">Logout</span>
+          <el-button
+            style="
+              font-weight: 300;
+              height: 45px;
+              background-color: orangered;
+              color: white;
+            "
+            >Sign out</el-button
+          >
         </div>
       </div>
     </div>
@@ -152,6 +165,13 @@ const handleToHome = () => {
   background-color: #ffffff;
   border-bottom: 0.5px solid #eeeeee;
   font-family: "Roboto", sans-serif;
+
+  :deep(.el-dropdown-link) {
+    &:hover {
+      border: none;
+      outline: none;
+    }
+  }
 
   .top {
     display: flex;

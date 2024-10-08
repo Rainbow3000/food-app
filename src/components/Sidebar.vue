@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useNotificationStore } from "@/stores/notification";
 import { useOrderStore } from "@/stores/order";
 import { storeToRefs } from "pinia";
 import { onMounted, ref } from "vue";
@@ -26,6 +27,11 @@ const sidebarList = [
     icon: "pi-shopping-cart",
   },
   {
+    name: "Thông báo",
+    route: "/admin/notification",
+    icon: "pi-bell",
+  },
+  {
     name: "Bình luận",
     route: "/admin/comment",
     icon: "pi-comments",
@@ -47,6 +53,7 @@ const router = useRouter();
 const route = useRoute();
 
 const { count } = storeToRefs(useOrderStore());
+const { length } = storeToRefs(useNotificationStore());
 
 const defaultIndexActive = ref(0);
 
@@ -87,6 +94,7 @@ onMounted(() => {
         <span>{{ item.name }}</span>
 
         <span style="color: red; margin-left: 3px" v-if="item.name === 'Đơn hàng'">({{ count }})</span>
+        <span style="color: red; margin-left: 3px" v-if="item.name === 'Thông báo'">({{ length }})</span>
       </div>
     </div>
   </el-card>
@@ -94,7 +102,7 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .sidebar-container {
-  width: 210px;
+  width: 230px;
   height: 100vh;
   color: #333;
 

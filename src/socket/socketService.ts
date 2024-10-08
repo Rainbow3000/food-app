@@ -2,6 +2,7 @@ import { io, Socket } from "socket.io-client";
 import { ElMessage } from "element-plus";
 import { useOrder } from "@/composables/useOrder";
 import { ORDER_STATUS } from "@/common/enum";
+import { useNotification } from "@/composables/useNotification";
 
 class SocketService {
   socket: Socket;
@@ -29,6 +30,11 @@ class SocketService {
     this.socket.on("notify-order", (message) => {
       ElMessage.success(message);
       useOrder().getOrders({ orderStatus: ORDER_STATUS.PENDING });
+    });
+
+    this.socket.on("notify-update-order", (message) => {
+      ElMessage.success(message);
+      useNotification().getNotification();
     });
   }
 

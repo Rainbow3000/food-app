@@ -44,5 +44,5 @@ onMounted(() => {
 </script>
 
 <template>
-  <div ref="paypalButtonContainer"></div>
+    <div ref="paypalButtonContainer"></div>
 </template>

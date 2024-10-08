@@ -34,7 +34,8 @@ const router = createRouter({
         {
           path: "payment",
           component: () => import("../frontend/views/Payment.vue"),
-        }, {
+        },
+        {
           path: "success",
           component: () => import("../frontend/views/Success.vue"),
         },
@@ -42,7 +43,7 @@ const router = createRouter({
           path: "my-order",
           component: () => import("../frontend/views/MyOrder.vue"),
         },
-      ]
+      ],
     },
 
     {
@@ -73,8 +74,12 @@ const router = createRouter({
           path: "order-details/:id",
           component: () => import("../views/OrderDetails.vue"),
         },
-      ]
-    }
+        {
+          path: "notification",
+          component: () => import("../views/Notification.vue"),
+        },
+      ],
+    },
   ],
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
@@ -82,29 +87,34 @@ const router = createRouter({
     } else {
       return { top: 0 };
     }
-  }
+  },
 });
 
-
-const PRIVATE_PAGES = ['']
+const PRIVATE_PAGES = [""];
 
 router.beforeEach(async (to, _from, next) => {
-  if (!to.path.includes('admin') && !PRIVATE_PAGES.includes(to.path)) {
-    return next()
+  if (!to.path.includes("admin") && !PRIVATE_PAGES.includes(to.path)) {
+    return next();
   } else {
-    const accessToken = JSON.parse(localStorage.getItem('user') as string)?.accessToken
+    const accessToken = JSON.parse(
+      localStorage.getItem("user") as string
+    )?.accessToken;
 
     if (!accessToken) {
-      return next('/login')
+      return next("/login");
     }
 
-    if (JSON.parse(localStorage.getItem('user') as string)?.userRoles.find((item: { role: { roleName: string; }; }) => item.role.roleName === 'super_admin')) {
-      return next()
+    if (
+      JSON.parse(localStorage.getItem("user") as string)?.userRoles.find(
+        (item: { role: { roleName: string } }) =>
+          item.role.roleName === "super_admin"
+      )
+    ) {
+      return next();
     } else {
-      return next('/')
+      return next("/");
     }
   }
-})
-
+});
 
 export default router;
