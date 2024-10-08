@@ -10,49 +10,6 @@ import { useCategoryStore } from "@/stores/category";
 import { useProductStore } from "@/stores/product";
 import type { FormInstance, FormRules } from "element-plus";
 
-const colors = [
-  {
-    label: "Trắng",
-    value: "white",
-  },
-  {
-    label: "Đen",
-    value: "black",
-  },
-  {
-    label: "Đỏ",
-    value: "red",
-  },
-  {
-    label: "Xanh lam",
-    value: "blue",
-  },
-  {
-    label: "Xanh lục",
-    value: "green",
-  },
-  {
-    label: "Vàng",
-    value: "yellow",
-  },
-  {
-    label: "Cam",
-    value: "orange",
-  },
-  {
-    label: "Xám",
-    value: "gray",
-  },
-  {
-    label: "Hồng",
-    value: "pink",
-  },
-  {
-    label: "Tím",
-    value: "Violet",
-  },
-];
-
 const sizes = [
   'S', 'M', 'L'
 ]
@@ -108,10 +65,6 @@ const rules = reactive<FormRules<TProduct>>({
 
   size: [
     { required: true, message: 'Kích cỡ không được bỏ trống', trigger: ['change', 'blur'] },
-  ],
-
-  color: [
-    { required: true, message: 'Màu không được bỏ trống', trigger: ['change', 'blur'] },
   ],
   categoryId: [
     { required: true, message: 'ID danh mục không được bỏ trống', trigger: ['change', 'blur'] },
@@ -206,32 +159,18 @@ onUnmounted(() => {
           <el-input v-model="ruleForm.description" placeholder="Nhập mô tả" />
         </el-form-item>
 
-        <el-form-item label="Màu sắc" label-position="top" prop="color">
-          <el-select multiple v-model="chooseColor" placeholder="Select" size="large" style="width: 240px">
-            <el-option v-for="item in colors" :key="item.value" :label="item.label" :value="item.value" />
-          </el-select>
-        </el-form-item>
-
         <el-form-item label="Kích cỡ" label-position="top" prop="size">
           <el-select multiple v-model="chooseSize" placeholder="Select" size="large" style="width: 240px">
             <el-option v-for="item in sizes" :key="item" :label="item" :value="item" />
           </el-select>
         </el-form-item>
 
-        <el-form-item label="Giá cũ" label-position="top" prop="oldPrice">
-          <el-input v-model="ruleForm.oldPrice" placeholder="Nhập giá cũ" />
-        </el-form-item>
-
-        <el-form-item label="Giá mới" label-position="top" prop="newPrice">
-          <el-input v-model="ruleForm.newPrice" placeholder="Nhập giá mới" />
+        <el-form-item label="Giá" label-position="top" prop="newPrice">
+          <el-input v-model="ruleForm.newPrice" placeholder="Nhập giá" />
         </el-form-item>
 
         <el-form-item label="Đã bán" label-position="top" prop="sold">
           <el-input type="number" v-model.number="ruleForm.sold" placeholder="Nhập số lượng đã bán" />
-        </el-form-item>
-
-        <el-form-item label="Tồn kho" label-position="top" prop="stock">
-          <el-input type="number" v-model.number="ruleForm.stock" placeholder="Nhập số lượng tồn kho" />
         </el-form-item>
 
         <el-form-item label="Danh mục" label-position="top" prop="categoryId">

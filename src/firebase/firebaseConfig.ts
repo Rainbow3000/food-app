@@ -5,13 +5,13 @@ import { getStorage } from 'firebase/storage';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDtErJ8g05JnutVNbQjGCgArFpX6MFC1VU",
-  authDomain: "my-firebase-31476.firebaseapp.com",
-  projectId: "my-firebase-31476",
-  storageBucket: "my-firebase-31476.appspot.com",
-  messagingSenderId: "490352003580",
-  appId: "1:490352003580:web:951ae32d4f6203f6e70a79",
-  measurementId: "G-NFK4W0F85R"
+  apiKey: "AIzaSyA3CskE-Kczd_FqOU6ZNhOhXZfszWnXZWc",
+  authDomain: "food-app-5a14f.firebaseapp.com",
+  projectId: "food-app-5a14f",
+  storageBucket: "food-app-5a14f.appspot.com",
+  messagingSenderId: "511747148394",
+  appId: "1:511747148394:web:a9916933256afbe4f6d813",
+  measurementId: "G-HB52KNVQ0N"
 };
 
 // Initialize Firebase

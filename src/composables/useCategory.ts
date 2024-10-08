@@ -100,6 +100,8 @@ export const useCategory = () => {
       if (error instanceof AxiosError) {
         const { message } = error.response?.data as TError
 
+        console.log(message)
+
         return ElMessage.error(message)
       }
 

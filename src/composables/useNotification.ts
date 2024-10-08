@@ -27,8 +27,19 @@ export const useNotification = () => {
     }
   };
 
+  const updateSeenNotify = async () => {
+    try {
+      await request.post("/notification/update-seen");
+
+      return true;
+    } catch (error) {
+      return false;
+    }
+  };
+
   return {
     notificationStore,
     getNotification,
+    updateSeenNotify
   };
 };

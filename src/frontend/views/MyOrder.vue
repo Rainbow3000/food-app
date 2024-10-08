@@ -2,8 +2,8 @@
 import { useOrder } from "@/composables/useOrder";
 import { useOrderStore } from "@/stores/order";
 import { storeToRefs } from "pinia";
-import { computed, onMounted, ref } from "vue";
-import { formatCurrency, formatDate } from "@/utils/format";
+import { computed, onMounted } from "vue";
+import { formatDate } from "@/utils/format";
 import type { TProduct } from "@/common/type";
 import { ORDER_STATUS } from "@/common/enum";
 
