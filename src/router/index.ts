@@ -12,35 +12,35 @@ const router = createRouter({
           component: () => import("../frontend/views/Home.vue"),
         },
         {
-          path: "login",
+          path: "/login",
           component: () => import("../frontend/views/Login.vue"),
         },
         {
-          path: "register",
+          path: "/register",
           component: () => import("../frontend/views/Register.vue"),
         },
         {
-          path: "category/:id",
+          path: "/category/:id",
           component: () => import("../frontend/views/CategoryDetails.vue"),
         },
         {
-          path: "cart",
+          path: "/cart",
           component: () => import("../frontend/views/Cart.vue"),
         },
         {
-          path: "product/:id",
+          path: "/product/:id",
           component: () => import("../frontend/views/ProductDetails.vue"),
         },
         {
-          path: "payment",
+          path: "/payment",
           component: () => import("../frontend/views/Payment.vue"),
         },
         {
-          path: "success",
+          path: "/success",
           component: () => import("../frontend/views/Success.vue"),
         },
         {
-          path: "my-order",
+          path: "/my-order",
           component: () => import("../frontend/views/MyOrder.vue"),
         },
       ],

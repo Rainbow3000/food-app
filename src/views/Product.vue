@@ -42,12 +42,11 @@ const tableColumns = [
   { prop: "id", label: "#ID", width: "auto" },
   { prop: "image", label: "Ảnh", width: "auto" },
   { prop: "name", label: "Tên", width: "auto" },
-  { prop: "description", label: "Mô tả", width: "auto" },
+  { prop: "description", label: "Mô tả", width: "400px" },
   { prop: "size", label: "Kích cỡ", width: "auto" },
   { prop: "oldPrice", label: "Giá cũ", width: "auto" },
   { prop: "newPrice", label: "Giá mới", width: "auto" },
   { prop: "sold", label: "Đã bán", width: "auto" },
-  { prop: "stock", label: "Tồn kho", width: "auto" },
   { prop: "status", label: "Trạng thái", width: "auto" },
 ];
 

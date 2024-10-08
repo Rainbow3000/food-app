@@ -6,8 +6,7 @@ const handleSuccess = () => {
 
 <template>
   <div class="card">
-    <div
-      style="
+    <div style="
         border-radius: 200px;
         height: 200px;
         width: 200px;
@@ -16,26 +15,18 @@ const handleSuccess = () => {
         display: flex;
         align-items: center;
         justify-content: center;
-      "
-    >
+      ">
       <i class="checkmark">✓</i>
     </div>
     <h1>ORDER SUCCESSS !</h1>
     <p>Us will check your order and feedback to your email.<br /></p>
     <div style="display: flex; align-items: center; margin-top: 20px">
-      <el-button
-        @click="handleSuccess"
-        type="primary"
-        style="margin-right: 20px; height: 45px"
-        class="primary"
-        >Home</el-button
-      >
+      <el-button @click="handleSuccess"
+        style="margin-right: 20px; height: 45px; background-color: orangered; color: white;"
+        class="primary">Home</el-button>
 
-      <router-link to="my-order"
-        ><el-button type="primary" style="height: 45px" class="primary"
-          >My order</el-button
-        ></router-link
-      >
+      <router-link to="my-order"><el-button style="height: 45px; background-color: orangered; color: white;"
+          class="primary">My order</el-button></router-link>
     </div>
   </div>
 </template>

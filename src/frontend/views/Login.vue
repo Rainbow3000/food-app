@@ -281,7 +281,7 @@ h3 {
   }
 
   &:focus {
-    border-bottom: 1px solid #accffe;
+    border-bottom: 1px solid orangered;
   }
 }
 

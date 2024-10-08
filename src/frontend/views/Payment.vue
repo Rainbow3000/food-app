@@ -136,15 +136,8 @@ const handleOrderSuccess = async (payload: {
   <h2>Payment</h2>
   <div class="payment">
     <el-card class="left">
-      <el-form
-        ref="ruleFormRef"
-        style="max-width: 600px"
-        :model="ruleForm"
-        :rules="rules"
-        label-width="auto"
-        class="demo-ruleForm"
-        :size="formSize"
-      >
+      <el-form ref="ruleFormRef" style="max-width: 600px" :model="ruleForm" :rules="rules" label-width="auto"
+        class="demo-ruleForm" :size="formSize">
         <el-form-item label="Phone number" prop="phoneNumber">
           <el-input v-model="ruleForm.phoneNumber" style="height: 40px" />
         </el-form-item>
@@ -161,18 +154,11 @@ const handleOrderSuccess = async (payload: {
           <el-switch v-model="switchPayment" />
         </el-form-item>
 
-        <PaypalButton
-          @success="handleOrderSuccess"
-          :total="total"
-          v-if="switchPayment"
-        />
+        <PaypalButton @success="handleOrderSuccess" :total="total" v-if="switchPayment" />
 
         <el-form-item v-else>
-          <el-button
-            style="height: 45px; width: 200px"
-            type="primary"
-            @click="submitForm(ruleFormRef)"
-          >
+          <el-button style="height: 45px; width: 200px; color: white; background-color: orangered"
+            @click="submitForm(ruleFormRef)">
             Payment
           </el-button>
         </el-form-item>
@@ -181,31 +167,18 @@ const handleOrderSuccess = async (payload: {
 
     <el-card class="cart-list">
       <div v-for="(item, index) in cartList" :key="index" class="cart-item">
-        <img
-          width="90px"
-          height="90px"
-          style="border-radius: 5px"
-          :src="item.product.image"
-          alt=""
-        />
+        <img width="90px" height="90px" style="border-radius: 5px" :src="item.product.image" alt="" />
         <div class="info">
-          <span
-            ><b style="color: #333">Name:</b>&nbsp;
+          <span><b style="color: #333">Name:</b>&nbsp;
             {{ item.product.description }}
           </span>
-          <span style="margin-top: 5px"
-            ><b style="color: #333">Qty: </b>&nbsp; x {{ item.quantity }}</span
-          >
-          <span style="margin-top: 5px"
-            ><b style="color: #333">Price: </b>&nbsp;
-            <span style="color: red">${{ item.product.newPrice }}</span></span
-          >
+          <span style="margin-top: 5px"><b style="color: #333">Qty: </b>&nbsp; x {{ item.quantity }}</span>
+          <span style="margin-top: 5px"><b style="color: #333">Price: </b>&nbsp;
+            <span style="color: red">${{ item.product.newPrice }}</span></span>
         </div>
       </div>
-      <span style="margin-top: 30px"
-        ><b style="margin-top: 20px; color: #333">Total: </b>
-        <span style="color: red">${{ cartList.length ? total : 0 }}</span></span
-      >
+      <span style="margin-top: 30px"><b style="margin-top: 20px; color: #333">Total: </b>
+        <span style="color: red">${{ cartList.length ? total : 0 }}</span></span>
     </el-card>
   </div>
 </template>

@@ -44,7 +44,7 @@ onBeforeRouteLeave(async () => {
 </script>
 
 <template>
-  <h2 style="margin-top: 50px; font-weight: bold;">Food by category</h2>
+  <h2 style="margin-top: 50px; font-weight: bold;">FOOD BY CATEGORY</h2>
   <div class="category-details">
     <el-card class="left">
       <div class="filter-item">
@@ -105,7 +105,7 @@ onBeforeRouteLeave(async () => {
     width: 23%;
     padding: 20px;
     color: gray;
-    margin-top: 25px;
+    margin-top: 70px;
 
     .filter-item {
       width: 100%;

@@ -5,6 +5,7 @@ import { useProductStore } from "@/stores/product";
 import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
 import { computed, ref } from "vue";
+import { useRouter } from "vue-router";
 
 const { setUser } = useUserStore();
 const { user } = storeToRefs(useUserStore());
@@ -12,6 +13,8 @@ const { cartList } = storeToRefs(useCartStore());
 const cartStore = useCartStore();
 const { getProducts } = useProduct();
 const { setFilter } = useProductStore();
+
+const router = useRouter()
 
 const handleLogout = () => {
   localStorage.removeItem("user");
@@ -34,115 +37,85 @@ const isAdmin = computed(() =>
 );
 
 const handleToHome = () => {
-  window.location.href = "/";
+  window.location.href = '/'
 };
 </script>
 
 <template>
   <div class="navbar">
     <div class="top">
-      <div class="top-item logo">
-        <div style="cursor: pointer" @click="handleToHome">
-          <img
-            style="object-fit: cover"
-            width="max-content"
-            height="45px"
-            src="/food.png"
-            alt=""
-          />
+      <div class="left">
+        <div class="top-item logo">
+
+          <div style="cursor: pointer" @click="handleToHome">
+            <img style="object-fit: cover" width="max-content" height="45px" src="/food.png" alt="" />
+          </div>
+
+        </div>
+        <div class="top-item search">
+          <input @input="handleFilter" v-model="q" type="text" placeholder="Search for food..." />
+          <button>
+            <el-icon>
+              <Search />
+            </el-icon>
+          </button>
         </div>
       </div>
-      <div class="top-item search">
-        <input
-          @input="handleFilter"
-          v-model="q"
-          type="text"
-          placeholder="Search food..."
-        />
-        <button>
-          <el-icon>
-            <Search />
-          </el-icon>
-        </button>
-      </div>
-      <div class="top-item action">
-        <div v-if="isAdmin" class="item">
-          <i class="pi pi-building-columns"></i>&nbsp;
-          <router-link
-            style="color: inherit; text-decoration: none"
-            to="/admin/dashboard"
-          >
-            <span style="font-weight: 300; color: gray">Dashboard</span>
-          </router-link>
-        </div>
-        <div class="item">
-          <i class="pi pi-bell"></i>&nbsp;
-          <router-link
-            style="color: inherit; text-decoration: none"
-            to="/notification"
-          >
-            <span style="font-weight: 300; color: gray"> Notification </span>
-          </router-link>
-        </div>
-        <div class="item" v-if="user">
-          <i class="pi pi-shopping-bag"></i>&nbsp;
-          <router-link
-            style="color: inherit; text-decoration: none"
-            to="/my-order"
-          >
-            <span style="font-weight: 300; color: gray">Order</span>
-          </router-link>
-        </div>
-        <div class="item">
-          <i class="pi pi-heart"></i>&nbsp;
-          <span style="font-weight: 300; color: gray">Favourite</span>
-        </div>
-        <div class="item">
-          <i class="pi pi-shopping-cart"></i>&nbsp;
-          <router-link style="color: inherit; text-decoration: none" to="/cart"
-            ><span style="font-weight: 300; color: gray"
-              >Cart (<b style="color: red">{{ cartList.length }}</b
-              >)</span
-            ></router-link
-          >
-        </div>
-        <div class="item" v-if="!user">
-          <router-link
-            style="color: inherit; text-decoration: none; margin-right: 20px"
-            to="/login"
-            ><el-button class="btn-auth" style="font-weight: 300; color: gray"
-              >Login</el-button
-            ></router-link
-          >
 
-          <router-link
-            style="color: inherit; text-decoration: none"
-            to="/register"
-            ><el-button class="btn-auth" style="font-weight: 300; color: gray"
-              >Register</el-button
-            ></router-link
-          >
-        </div>
+      <div class="right">
+        <div class="top-item action">
+          <div v-if="isAdmin" class="item">
+            <i class="pi pi-building-columns"></i>&nbsp;
+            <router-link style="color: inherit; text-decoration: none" to="/admin/dashboard">
+              <span style="font-weight: 300; color: gray">Dashboard</span>
+            </router-link>
+          </div>
+          <div class="item">
+            <i class="pi pi-bell"></i>&nbsp;
+            <router-link style="color: inherit; text-decoration: none" to="/notification">
+              <span style="font-weight: 300; color: gray"> Notification </span>
+            </router-link>
+          </div>
+          <div class="item" v-if="user">
+            <i class="pi pi-shopping-bag"></i>&nbsp;
+            <router-link style="color: inherit; text-decoration: none" to="/my-order">
+              <span style="font-weight: 300; color: gray">Order</span>
+            </router-link>
+          </div>
+          <div class="item">
+            <i class="pi pi-heart"></i>&nbsp;
+            <span style="font-weight: 300; color: gray">Favourite</span>
+          </div>
+          <div class="item">
+            <i class="pi pi-shopping-cart"></i>&nbsp;
+            <router-link style="color: inherit; text-decoration: none" to="/cart"><span
+                style="font-weight: 300; color: gray">Cart (<b style="color: red">{{ cartList.length
+                  }}</b>)</span></router-link>
+          </div>
+          <div class="item" v-if="!user">
+            <router-link style="color: inherit; text-decoration: none; margin-right: 20px" to="/login"><el-button
+                class="btn-auth" style="font-weight: 300; color: gray">Login</el-button></router-link>
 
-        <div v-if="user" class="item">
-          <i class="pi pi-user"></i>&nbsp;
-          <span
-            ><b>{{ user.userName }}</b></span
-          >
-        </div>
+            <router-link style="color: inherit; text-decoration: none" to="/register"><el-button class="btn-auth"
+                style="font-weight: 300; color: gray">Register</el-button></router-link>
+          </div>
 
-        <div v-if="user" class="item" @click="handleLogout">
-          <el-button
-            style="
-              font-weight: 300;
-              height: 45px;
-              background-color: orangered;
-              color: white;
-            "
-            >Sign out</el-button
-          >
+          <div v-if="user" class="item">
+            <i class="pi pi-user"></i>&nbsp;
+            <span><b>{{ user.userName }}</b></span>
+          </div>
+
+          <div v-if="user" class="item" @click="handleLogout">
+            <el-button style="
+                font-weight: 300;
+                height: 45px;
+                background-color: orangered;
+                color: white;
+              ">Sign out</el-button>
+          </div>
         </div>
       </div>
+
     </div>
   </div>
   <div class="hr"></div>
@@ -184,13 +157,25 @@ const handleToHome = () => {
       width: max-content;
     }
 
+    .left {
+      display: flex;
+      align-items: center;
+      flex: 1;
+    }
+
+    .right {
+      display: flex;
+      align-items: center;
+      flex: 1;
+    }
+
     .search {
       border: 1px solid orangered;
       border-radius: 5px;
       height: 45px;
       display: flex;
       align-items: center;
-      width: 20%;
+      min-width: 40%;
 
       input {
         width: 100%;
@@ -229,7 +214,7 @@ const handleToHome = () => {
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      position: absolute;
+      position: relative;
       right: 0;
 
       .item {
@@ -243,6 +228,7 @@ const handleToHome = () => {
 
       .btn-auth {
         height: 45px;
+
         &:hover {
           background-color: orangered;
           color: #ffffff !important;
