@@ -136,15 +136,8 @@ const handleTabChange = async (value: string) => {
 
 <template>
   <div class="order-container">
-    <el-card
-      style="margin-top: 20px; margin-left: 20px; width: 250px; height: 300px"
-    >
-      <el-tabs
-        @tab-change="handleTabChange"
-        :tab-position="tabPosition"
-        style="height: 200px"
-        class="demo-tabs"
-      >
+    <el-card style="margin-top: 90px; margin-left: 20px; width: 250px; height: 300px">
+      <el-tabs @tab-change="handleTabChange" :tab-position="tabPosition" style="height: 200px" class="demo-tabs">
         <el-tab-pane label="Chờ duyệt"></el-tab-pane>
         <el-tab-pane label="Đang giao hàng"></el-tab-pane>
         <el-tab-pane label="Đơn hàng hoàn tất"></el-tab-pane>
@@ -153,16 +146,9 @@ const handleTabChange = async (value: string) => {
     </el-card>
 
     <div class="order-list">
-      <BaseTable
-        :data="tableData"
-        :columns="tableColumns"
-        :isHiddenComponent="true"
-        :isHiddenUpdate="statusIndex === 2 || statusIndex === 3"
-        screen="đơn hàng"
-        @edit="handleEditData"
-        @delete="handleDelete"
-        @export="handleExportData"
-      />
+      <BaseTable :data="tableData" :columns="tableColumns" :isHiddenComponent="true"
+        :isHiddenUpdate="statusIndex === 2 || statusIndex === 3" screen="đơn hàng" @edit="handleEditData"
+        @delete="handleDelete" @export="handleExportData" />
     </div>
   </div>
 </template>
@@ -199,7 +185,7 @@ const handleTabChange = async (value: string) => {
     }
   }
 
-  .demo-tabs > .el-tabs__content {
+  .demo-tabs>.el-tabs__content {
     padding: 32px;
     color: #6b778c;
     font-size: 32px;

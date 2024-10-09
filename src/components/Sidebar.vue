@@ -1,8 +1,8 @@
 <script lang="ts" setup>
+import { useNotification } from "@/composables/useNotification";
 import { useNotificationStore } from "@/stores/notification";
-import { useOrderStore } from "@/stores/order";
 import { storeToRefs } from "pinia";
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 const sidebarList = [
@@ -52,18 +52,26 @@ const router = useRouter();
 
 const route = useRoute();
 
-const { count } = storeToRefs(useOrderStore());
-const { length } = storeToRefs(useNotificationStore());
+const { updateSeenNotify, getNotification } = useNotification()
+
+const { notificationList } = storeToRefs(useNotificationStore());
+
+const notifyLength = computed(() => notificationList.value.filter(item => !item.isSeen).length)
 
 const defaultIndexActive = ref(0);
 
-const handleChangeSidebar = (index: number, path: string) => {
+const handleChangeSidebar = async (index: number, path: string) => {
+
+  if (path === '/admin/notification') {
+    await updateSeenNotify()
+    await getNotification()
+  }
+
   defaultIndexActive.value = index;
   router.replace(path);
 };
 
 onMounted(() => {
-  console.log(123,route.path)
   defaultIndexActive.value = sidebarList.findIndex(
     (item) => item.route === route.path
   );
@@ -73,29 +81,23 @@ onMounted(() => {
 <template>
   <el-card class="sidebar-container">
     <div class="menu-list">
-      <div
-        :class="defaultIndexActive === index ? 'menu-item active' : 'menu-item'"
-        v-for="(item, index) in sidebarList"
-        :key="item.name"
-        @click="handleChangeSidebar(index, item.route)"
-      >
-        <div
-          style="
+      <div :class="defaultIndexActive === index ? 'menu-item active' : 'menu-item'" v-for="(item, index) in sidebarList"
+        :key="item.name" @click="handleChangeSidebar(index, item.route)">
+        <div style="
             border: 0.5px solid #e2e8f0;
             border-radius: 5px;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 5px;
-          "
-        >
+          ">
           <i :class="'pi ' + item.icon"></i>
         </div>
         &nbsp; &nbsp; &nbsp;
         <span>{{ item.name }}</span>
 
-        <span style="color: red; margin-left: 3px" v-if="item.name === 'Đơn hàng'">({{ count }})</span>
-        <span style="color: red; margin-left: 3px" v-if="item.name === 'Thông báo'">({{ length }})</span>
+        <span style="color: red; margin-left: 3px" v-if="item.name === 'Thông báo' && notifyLength">({{ notifyLength
+          }})</span>
       </div>
     </div>
   </el-card>

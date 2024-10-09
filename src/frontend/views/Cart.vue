@@ -12,27 +12,20 @@ const handleRemoveCart = (id: number) => {
 
 <template>
   <el-card class="cart">
-    <h2
-      style="
+    <h2 style="
         display: flex;
         align-items: center;
         text-align: center;
         margin-bottom: 30px;
         margin-left: 10px;
-      "
-    >
+      ">
       Cart
     </h2>
     <el-table :data="cartList" style="width: 100%">
       <el-table-column label="Image" width="180">
         <template #default="scope">
           <div style="display: flex; align-items: center">
-            <img
-              width="90px"
-              height="90px"
-              :src="scope.row.product.image"
-              alt=""
-            />
+            <img width="90px" height="90px" :src="scope.row.product.image" alt="" />
           </div>
         </template>
       </el-table-column>
@@ -40,17 +33,14 @@ const handleRemoveCart = (id: number) => {
         <template #default="scope">
           <div style="display: flex; align-items: center">
             <div>
-              <span
-                >Size:
-                <div
-                  style="
+              <span>Size:
+                <div style="
                     width: 20px;
                     height: 20px;
                     background-color: #eeeeee;
                     text-align: center;
                     line-height: 20px;
-                  "
-                >
+                  ">
                   {{ scope.row.product.size }}
                 </div>
               </span>
@@ -76,19 +66,13 @@ const handleRemoveCart = (id: number) => {
       <el-table-column label="Total" width="180">
         <template #default="scope">
           <div style="display: flex; align-items: center">
-            <span style="color: red"
-              >${{ scope.row.product.newPrice * scope.row.quantity }}</span
-            >
+            <span style="color: red">${{ scope.row.product.newPrice * scope.row.quantity }}</span>
           </div>
         </template>
       </el-table-column>
       <el-table-column label="Action">
         <template #default="scope">
-          <el-button
-            size="small"
-            type="danger"
-            @click="() => handleRemoveCart(scope.row.product.id)"
-          >
+          <el-button size="small" type="danger" @click="() => handleRemoveCart(scope.row.product.id)">
             <i class="pi pi-trash"></i>
           </el-button>
         </template>
@@ -99,15 +83,11 @@ const handleRemoveCart = (id: number) => {
   <div class="bottom">
     <div style="margin-top: 20px">
       <span>Total Money : &nbsp;</span>
-      <span style="color: red; font-weight: bold"
-        >${{ cartList.length ? total : 0 }}</span
-      >
+      <span style="color: red; font-weight: bold">${{ cartList.length ? total : 0 }}</span>
     </div>
 
     <router-link style="text-decoration: none; color: inherit" to="/payment">
-      <el-button type="primary" style="height: 45px; margin-top: 30px"
-        >Payment</el-button
-      >
+      <el-button style="height: 45px; margin-top: 30px; background-color: orangered; color: white">Payment</el-button>
     </router-link>
   </div>
 </template>

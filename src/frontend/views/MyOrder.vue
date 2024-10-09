@@ -73,7 +73,7 @@ const handleCancelOrder = async (id: number) => {
 </script>
 
 <template>
-  <h2 style="margin-top: 50px; font-weight: bold">My order</h2>
+  <h2 style="margin-top: 50px; font-weight: bold">YOUR ORDER</h2>
   <div class="order-list">
     <el-timeline style="max-width: 600px">
       <el-timeline-item v-for="(activity, index) in activities" :key="index" :color="activity.color">
@@ -97,7 +97,7 @@ const handleCancelOrder = async (id: number) => {
                   Name:
                   <b>{{ scope.row?.product?.name }}</b>
                 </div>
-                <span>Size:
+                <span style="display: flex; align-items: center;">Size: &nbsp;
                   <div style="
                       width: 20px;
                       height: 20px;
@@ -201,11 +201,12 @@ const handleCancelOrder = async (id: number) => {
   width: 100%;
   padding: 0 190px;
   display: flex;
-  flex-direction: column;
   align-items: flex-start;
-  align-items: center;
   margin-top: 50px;
 
-  .el-timeline {}
+  .el-timeline {
+    margin-right: 100px;
+    margin-top: 10px;
+  }
 }
 </style>

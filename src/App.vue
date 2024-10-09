@@ -5,13 +5,22 @@ import { useAppStore } from "./stores/app";
 import { storeToRefs } from "pinia";
 import socketService from "./socket/socketService";
 import { onMounted } from "vue";
+import { useOrder } from "./composables/useOrder";
+import { useNotification } from "./composables/useNotification";
+import { useUserStore } from "./stores/user";
 
 const appStore = useAppStore();
+const { getOrders } = useOrder()
+const { getNotification } = useNotification()
+const { user } = storeToRefs(useUserStore())
+
 
 const { isShowOverlay } = storeToRefs(appStore);
 
 onMounted(() => {
   socketService.connect();
+  getOrders()
+  if (user.value) getNotification()
 });
 </script>
 

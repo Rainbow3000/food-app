@@ -70,14 +70,14 @@ const handleExportData = () => {
 
 <template>
   <div class="table-top">
-    <el-input style="width: 240px; height: 40px" :placeholder="placeholderText" />
+    <div style="width: 240px; height: 40px"></div>
 
-    <el-button v-if="!isHiddenExcel" @click="handleExportData" style="position: absolute; right: 150px" type="success">
+    <el-button v-if="!isHiddenExcel" @click="handleExportData" style="position: absolute; right: 150px; background-color: orangered;color: white" >
       <i class="pi pi-file-excel"></i>
       Xuất excel
     </el-button>
 
-    <el-button v-if="!isHiddenComponent" type="success" @click="handleShowForm(ACTION_ENUM.CREATE)">
+    <el-button style="background-color: orangered; color: white;" v-if="!isHiddenComponent" @click="handleShowForm(ACTION_ENUM.CREATE)">
       <Plus style="width: 1em; height: 1em; color: white" /> Thêm mới
     </el-button>
   </div>

@@ -31,7 +31,7 @@ const colors = computed(() => {
 });
 const sizes = computed(() => singleProduct.value.size?.split(","));
 
-const size = ref((sizes.value[0] as string) || "");
+const price = ref(0)
 
 const chooseSize = ref((colors?.value[0] as string) || "");
 const chooseColor = ref((sizes?.value[0] as string) || "");
@@ -80,12 +80,24 @@ const handleCreateComment = async () => {
 };
 
 onMounted(async () => {
-  await getSingleProduct(id.value);
+  getComments(id.value);
 
-  await getComments(id.value);
+  await getSingleProduct(id.value);
+  price.value = parseFloat(singleProduct.value.newPrice)
+
 });
 
 const handleChooseSize = (payload: string) => {
+  if (payload !== chooseSize.value) {
+    if (payload === 'S') {
+      singleProduct.value.newPrice = price.value.toString()
+    } else if (payload === 'M') {
+      singleProduct.value.newPrice = (price.value + 10).toString()
+    } else {
+      singleProduct.value.newPrice = (price.value + 20).toString()
+    }
+  }
+
   chooseSize.value = payload;
 
   updatePropsCart(id.value, {
@@ -116,12 +128,8 @@ const handleChooseSize = (payload: string) => {
 
         <div class="details-item">
           <span> Size: </span>
-          <div
-            v-for="size in sizes"
-            :key="size"
-            :class="chooseSize === size ? 'size active' : 'size'"
-            @click="handleChooseSize(size)"
-          >
+          <div v-for="size in sizes" :key="size" :class="chooseSize === size ? 'size active' : 'size'"
+            @click="handleChooseSize(size)">
             {{ size }}
           </div>
         </div>
@@ -141,28 +149,21 @@ const handleChooseSize = (payload: string) => {
         </div>
 
         <div class="details-quantity">
-          <el-button
-            @click="
-              () => {
-                if (quantity > 1) {
-                  quantity = quantity - 1;
-                }
-              }
-            "
-            >-</el-button
-          >
+          <el-button @click="() => {
+            if (quantity > 1) {
+              quantity = quantity - 1;
+            }
+          }
+            ">-</el-button>
           <div>{{ quantity }}</div>
           <el-button @click="quantity = quantity + 1">+</el-button>
-          <el-button
-            @click="handleAddToCart"
-            style="
+          <el-button @click="handleAddToCart" style="
               width: max-content;
               height: 45px;
               margin-left: 30px;
               color: #ffffff;
               background-color: orangered;
-            "
-          >
+            ">
             Add to cart
           </el-button>
         </div>
@@ -174,29 +175,22 @@ const handleChooseSize = (payload: string) => {
 
       <div class="comment-list">
         <div class="item" v-for="item in commentList" :key="item.id">
-          <div style="color: #5e77c9; font-weight: bold">
+          <div style="color: orangered; font-weight: 500">
             {{ item.user?.userName }} |
-            <span style="color: gray; font-weight: normal">{{
+            <span style="font-size: 12px;">{{
               formatDate(item.createdAt as string)
             }}</span>
           </div>
-          <div style="color: #333; margin-top: 10px; font-weight: 500">
+          <div style="margin-top: 10px">
             {{ item.content }}
           </div>
         </div>
       </div>
-      <div>
-        <el-input
-          v-model="form.content"
-          style="height: 45px; margin-top: 25px"
-          placeholder="Add your comment..."
-        />
-        <el-button
-          @click="handleCreateComment"
-          style="margin-top: 10px; height: 45px"
-          type="primary"
-          >OK</el-button
-        >
+      <div style="display: flex; align-items: center; margin-top: 50px;">
+        <el-input v-model="form.content" style="height: 50px" placeholder="Add your comment..." />
+        <el-button @click="handleCreateComment"
+          style=" height: 50px; width: 180px; margin-left: 30px; background-color: orangered; color: white; border: none;"
+          type="primary">OK</el-button>
       </div>
     </el-card>
 

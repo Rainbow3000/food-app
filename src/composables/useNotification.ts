@@ -37,9 +37,21 @@ export const useNotification = () => {
     }
   };
 
+
+  const deleteNotify = async (id: number) => {
+    try {
+      await request.delete(`/notification/${id}`);
+
+      return true;
+    } catch (error) {
+      return false;
+    }
+  };
+
   return {
     notificationStore,
     getNotification,
-    updateSeenNotify
+    updateSeenNotify,
+    deleteNotify
   };
 };

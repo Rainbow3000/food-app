@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import BaseTable from "@/base/BaseTable.vue";
-import { useComment } from "@/composables/useComment";
+import { useNotification } from "@/composables/useNotification";
 import { useNotificationStore } from "@/stores/notification";
 import { exportToExcel } from "@/utils/export";
 import { formatDate } from "@/utils/format";
@@ -22,40 +22,32 @@ const tableData = computed(() =>
   })
 );
 
-const { getComments, deleteComment } = useComment();
+const { getNotification, deleteNotify } = useNotification()
 
 const tableColumns = [
-  { prop: "id", label: "#ID", width: "auto" }, 
+  { prop: "id", label: "#ID", width: "auto" },
   { prop: "userId", label: "ID người dùng", width: "auto" },
   { prop: "content", label: "Nội dung", width: "auto" },
   { prop: "createdAt", label: "Ngày tạo", width: "auto" },
 ];
 
 const handleDelete = async (id: number) => {
-  await deleteComment(id);
-  await getComments();
+  await deleteNotify(id);
+  await getNotification();
 };
 
 const handleExportFile = () => {
   exportToExcel(notificationList.value);
 };
 
-onMounted(() => getComments());
+onMounted(() => getNotification());
 </script>
 
 <template>
   <div class="comment-container">
     <div class="comment-list">
-      <BaseTable
-        styleValue="height: 700px"
-        :data="tableData"
-        :columns="tableColumns"
-        :isHiddenComponent="true"
-        :isHiddenUpdate="true"
-        screen="bình luận"
-        @delete="handleDelete"
-        @export="handleExportFile"
-      />
+      <BaseTable styleValue="height: 700px" :data="tableData" :columns="tableColumns" :isHiddenComponent="true"
+        :isHiddenUpdate="true" screen="thông báo" @delete="handleDelete" @export="handleExportFile" />
     </div>
   </div>
 </template>
