@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { useCartStore } from "@/stores/cart";
 import { storeToRefs } from "pinia";
-import { formatCurrency } from "@/utils/format";
 
 const { addCart, removeCart, decrementCart } = useCartStore();
 const { cartList, total } = storeToRefs(useCartStore());

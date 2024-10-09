@@ -9,7 +9,6 @@ import { useAppStore } from "@/stores/app";
 import { useOrderStore } from "@/stores/order";
 import { useProductStore } from "@/stores/product";
 import { exportToExcel } from "@/utils/export";
-import { formatCurrency } from "@/utils/format";
 import { storeToRefs } from "pinia";
 import { computed, onMounted, ref, watch } from "vue";
 
@@ -32,8 +31,8 @@ const tableData = computed(() =>
   productList.value.map((item) => {
     return {
       ...item,
-      newPrice: formatCurrency(item.newPrice),
-      oldPrice: formatCurrency(item.oldPrice),
+      newPrice: item.newPrice,
+      oldPrice: item.oldPrice,
     };
   })
 );
@@ -44,7 +43,6 @@ const tableColumns = [
   { prop: "name", label: "Tên", width: "auto" },
   { prop: "description", label: "Mô tả", width: "400px" },
   { prop: "size", label: "Kích cỡ", width: "auto" },
-  { prop: "oldPrice", label: "Giá cũ", width: "auto" },
   { prop: "newPrice", label: "Giá mới", width: "auto" },
   { prop: "sold", label: "Đã bán", width: "auto" },
   { prop: "status", label: "Trạng thái", width: "auto" },
@@ -119,9 +117,7 @@ onMounted(async () => {
         style="display: flex; align-items: center; justify-content: center"
         ><span
           >Tổng doanh thu:
-          <b style="font-size: 25px; color: red">{{
-            formatCurrency(revenua)
-          }}</b></span
+          <b style="font-size: 25px; color: red">$ {{ revenua }}</b></span
         ><br />
       </el-card>
       <el-card
@@ -160,9 +156,7 @@ onMounted(async () => {
             >
             <span
               >Giá :
-              <b style="color: blue">
-                {{ formatCurrency(singleProduct?.newPrice) }}</b
-              ></span
+              <b style="color: blue"> ${{ singleProduct?.newPrice }}</b></span
             >
           </div>
         </div>

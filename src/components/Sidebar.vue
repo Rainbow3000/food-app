@@ -63,6 +63,7 @@ const handleChangeSidebar = (index: number, path: string) => {
 };
 
 onMounted(() => {
+  console.log(123,route.path)
   defaultIndexActive.value = sidebarList.findIndex(
     (item) => item.route === route.path
   );

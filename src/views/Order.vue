@@ -4,7 +4,6 @@ import { ORDER_STATUS } from "@/common/enum";
 import { useOrder } from "@/composables/useOrder";
 import { useOrderStore } from "@/stores/order";
 import { exportToExcel } from "@/utils/export";
-import { formatCurrency } from "@/utils/format";
 import type { TabsInstance } from "element-plus";
 import { storeToRefs } from "pinia";
 import { computed, onMounted, ref } from "vue";
@@ -31,7 +30,7 @@ const tableData = computed(() =>
     return {
       id: item.id,
       userId: item.user?.id,
-      totalMoney: formatCurrency(item.totalMoney),
+      totalMoney: item.totalMoney,
       userNote: item.userNote,
       orderStatus: statusHelper(item.orderStatus as string),
       email: item.user?.email,

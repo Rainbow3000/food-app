@@ -28,6 +28,7 @@ export type TNotification = {
   id?: number;
   userId: number;
   content: string;
+  isSeen: boolean;
   createdAt?: string;
   updatedAt?: string;
   deletedAt?: string;

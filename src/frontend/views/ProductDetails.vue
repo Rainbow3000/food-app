@@ -6,7 +6,7 @@ import { useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useProductStore } from "@/stores/product";
 import { useCartStore } from "@/stores/cart";
-import { formatCurrency, formatDate } from "@/utils/format";
+import { formatDate } from "@/utils/format";
 import { useComment } from "@/composables/useComment";
 import { ElMessage } from "element-plus";
 import { useCommentStore } from "@/stores/comment";
